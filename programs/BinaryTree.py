@@ -26,7 +26,7 @@ class TreeNode(object):
 class BinaryTree(object):
     def __init__(self):
         self.root = None
-    
+        self.item_str = ""    
     def add(self, item, binary_str_itr):
         self.root = self.add_aux(self.root, item, binary_str_itr)
 
@@ -55,7 +55,6 @@ class BinaryTree(object):
     def add_aux(self, current, item, binary_str_itr): 
         if current is None:
             current = TreeNode(None, None, None)
-            
         try:
             bit = next(binary_str_itr) 
             if bit == '0':
@@ -68,3 +67,36 @@ class BinaryTree(object):
         return current
 
     def find_all(self):
+        #self.pre_traverse(self.root)
+        #self.after_traverse(self.root)
+        self.mid_traverse(self.root)
+
+    def pre_traverse(self, node):
+        if  node is None:
+            return
+
+        if node.item is not None:
+            print(node.item)
+        self.pre_traverse(node.left)
+        self.pre_traverse(node.right)
+
+
+    def after_traverse(self, node):
+        if node is None:
+            return
+
+        self.after_traverse(node.left)
+        self.after_traverse(node.right)
+        if node.item is not None:
+            print(node.item)
+
+    def mid_traverse(self, node):
+        if node is None:
+            return
+
+        self.mid_traverse(node.left)
+
+        if node.item is not None:
+            #print(node.item)
+            self.item_str += node.item
+        self.mid_traverse(node.right)

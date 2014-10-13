@@ -6,11 +6,14 @@
 #all utils are here
 import os
 import re
-from .BinaryTree import NodeNotFoundError
+import sys
 
+from .BinaryTree import NodeNotFoundError
+from .BinaryTree import BinaryTree
+sys.setrecursionlimit(99999)
 RE_ONE_LETTER = r"^[a-z]{1}$"
 RE_ALL_CHAR = r"[a-zA-Z]+"
-RE_BINARY_STR = r"^[0-1]{8}$"
+RE_BINARY_STR = r"^[0-1]+$"
 
 LOWER_CASE_START = ord('a')
 LOWER_CASE_END   = ord('z') + 1
@@ -22,7 +25,12 @@ def i28b(i):
     bstr = bin(i)[2:]
     ret = ""
     ret = "0" * (8 - len(bstr)) + bstr
-    return ret
+    #return ret
+    return bstr
+
+def c2b(c):
+    i = ord(c)
+    return bin(i)[2:]
 
 def test_a_letter(letter):
     pattern = re.compile(RE_ONE_LETTER)
@@ -49,7 +57,8 @@ def check_letter_match_bstr(letter, bstr):
         return False
     
      
-    return i28b(ord(letter)) == bstr
+    #return i28b(ord(letter)) == bstr
+    return True
 
 
 def wrong_cmd_helper():
@@ -97,8 +106,32 @@ def command_parser(binary_tree):
                 else:
                     print("result:\r")
                     print(ret)
-
     
+        elif 'print' == cmds[0]:
+            if len(cmds) != 1:
+                wrong_cmd_helper()
+                command_find_item_bstr_helper()
+            else:
+                binary_tree.find_all()
+    
+        elif 'quit' == cmds[0]:
+            if len(cmds) != 1:
+                wrong_cmd_helper()
+                command_quit_helper()
+            else:
+                print("Bye Bye Beautiful !!\r")
+                exit(0)
+                
+
+
+def command_quit_helper():
+    print("if you wanna quit just input as follow\r" )
+    print("quit \r")
+
+def command_find_item_bstr_helper():
+    print("find all in the binary tree use under command \r")
+    print("find \r")
+
 def command_add_item_bstr_helper():
     print("add item and binary to the tree use under command \r")
     print("add item binary_str\r")
@@ -153,7 +186,6 @@ def write_to_file(filename):
 
     if os.path.exists(filename):
         choice = input("output file exists if you want to over write it input y/Y else exit\r\n")
-        print(choice)
         if 'Y' != choice and 'y' != choice:
             exit(2)
     
@@ -171,3 +203,15 @@ def read_from_filename(filename):
         return None
     else:
         return content
+
+
+def encode_str_to_ascii(content):
+    
+    ret = ""
+    tree = BinaryTree()
+    for i,v in enumerate(iter(content)):
+        ret += c2b(v)
+        tree.add(v, iter(ret))
+    return ret, tree
+        
+
