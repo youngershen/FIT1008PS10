@@ -9,8 +9,10 @@ from .Utils import parse_str_to_lowercase
 from .Utils import check_str_char
 from .Utils import letters_count
 from .Utils import encode_str_to_ascii
-from .BinaryTree import BinaryTree
+from .Utils import morse_encode
+from .Utils import morse_decode
 
+from .BinaryTree import BinaryTree
 from .BinaryTree import NodeNotFoundError
 
 class FileProcessor(object):
@@ -59,7 +61,6 @@ class FileProcessor(object):
         input = read_from_filename(input_filename)
         if input is None:
             exit(1)
-
         output = write_to_file(output_filename)
         ascii_str , tree = encode_str_to_ascii(input)
         output = write_to_file(output_filename)
@@ -71,7 +72,6 @@ class FileProcessor(object):
         input = read_from_filename(input_filename)
         if input is None:
             exit(1)
-        
         ret = ""
         keys = ""
         for i,v in enumerate(iter(input)):
@@ -80,9 +80,28 @@ class FileProcessor(object):
                 ret += tree.get(keys) if tree.get(keys) is not None else ""
             except NodeNotFoundError as e:
                 pass
-
-        print(ret)
         output = write_to_file(output_filename)
         output.write(ret)
 
+    @staticmethod
+    def morse_code_encode(input_filename, output_filename):
+        input = read_from_filename(input_filename)
+        if input is None:
+            exit(1)
+
+        ret = morse_encode(input)
+        output = write_to_file(output_filename)
+        output.write(ret)
+        output.close()
+
+    @staticmethod
+    def morse_code_decode(input_filename, output_filename):
+        input = read_from_filename(input_filename)
+        if input is None:
+            exit(1)
+
+        ret = morse_decode(input)
+        output = write_to_file(output_filename)
+        output.write(ret)
+        output.close()
 

@@ -10,7 +10,11 @@ from programs.FileProcessor import FileProcessor
 from programs.BinaryTreeInterface import BinaryTreeInterface
 BASEDIR = os.getcwd()
 
-
+#
+#
+#   this proc contains basic questions and extra bonus 1 
+#
+#   
 def test_task_1_1_vaild_inputs(filename):
     
     print("test for  task 1-1 vaild inputs")
@@ -85,7 +89,22 @@ def test_task_3_3_invaild_inputs(input_filename, output_filename):
     print("test for task 3-3 invaild inputs \r")
     tree = FileProcessor.encode_ascii(BASEDIR + "/test/out.txt", BASEDIR + "/test/ascii.txt")
     FileProcessor.reverse_tree_to_str(tree, input_filename, output_filename)
+def test_bonus_1_1_valid_inputs(input_filename, output_filename):
+    print("test for bonus task 1-1 valid inputs \r")
+    FileProcessor.morse_code_encode(input_filename, output_filename)
+    FileProcessor.morse_code_decode(BASEDIR + "/test/morse.txt", BASEDIR + "/test/morse_de.txt")
+
+def test_bonus_1_1_invalid_inputs(input_filename , output_filename):
+    print("test for bonus task 1-1 invalid inputs \r")
+    FileProcessor.morse_code_encode(input_filename, output_filename)
+    FileProcessor.morse_code_decode(input_filename , output_filename)
+
+
 def main():
+
+    #task bonus
+    #test_bonus_1_1_valid_inputs(BASEDIR + "/test/gpl.txt", BASEDIR + "/test/morse.txt")
+    test_bonus_1_1_invalid_inputs("sfsdf", "sfsdf")
     #task 1-1
     #test_task_1_1_vaild_inputs(os.getcwd() + '/test/gpl_2.txt')
     #test_task_1_1_invaild_inputs("2.txt")
@@ -111,6 +130,6 @@ def main():
     #test 3-3
 
     #test_task_3_3_vaild_inputs(BASEDIR + "/test/ascii.txt", BASEDIR + "/test/output2.txt")
-    test_task_3_3_vaild_inputs("sdf" , "sdf")
+    #test_task_3_3_vaild_inputs("sdf" , "sdf")
 if __name__ == '__main__':
     main()
